@@ -30,7 +30,7 @@ void drawWindow(int x, int y, int width, int height)
 }
 int main()
 {
-    int x = 10, y = 5, width = 20, height = 10;
+    int x = 0, y = 0, width = 20, height = 10;
 
     drawWindow(x, y, width, height);
 
