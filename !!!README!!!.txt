@@ -84,3 +84,9 @@ On branch main
 Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean
+
+1. 바탕화면에 해당하는 영역을 녹색으로 가득 채울 것
+2. 바탕화면을 콘솔창을 가득 채울 것, 공백이 없이 만들 것 (배경색)
+3. 바탕화면 위에 어제 만든 윈도우를 20*7 크기로 (10, 3)쯤에 찍어볼 것
+4. 윈도우의 <기본크기/기본위치/이름/색상> 속성을 struct 형태로 관리해보시오
+5. 다른 색상으로 (15, 5)에 동일한 윈도우를 출력해보시오
