@@ -15,7 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="window.c">
+    <ClCompile Include="20221416 console.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 main.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="FileName.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
