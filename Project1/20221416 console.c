@@ -2,17 +2,20 @@
 #include <windows.h>
 
 // 아스키 코드로 배경 색상 설정
-void setBackgroundColor(int color) {
+void setBackgroundColor(int color) 
+{
     printf("\033[48;5;%dm", color);
 }
 
 // 색상 초기화
-resetColor() {
+void resetColor() 
+{
     printf("\033[0m");
 }
 
 // 커서 위치 조정
-void gotoxy(int x, int y) {
+void gotoxy(int x, int y) 
+{
     COORD Cur;
     Cur.X = x;
     Cur.Y = y;
@@ -21,13 +24,16 @@ void gotoxy(int x, int y) {
 }
 
 // 바탕화면 채우는 함수
-void fillBackground(int color) {
+void fillBackground(int color) 
+{
     system("cls");
     setBackgroundColor(color);
 
     int i, j;
-    for (i = 0; i < 14; i++) {
-        for (j = 0; j < 120; j++) {
+    for (i = 0; i < 14; i++) 
+    {
+        for (j = 0; j < 120; j++) 
+        {
             printf(" ");
         }
     }

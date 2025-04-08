@@ -24,5 +24,14 @@
     <ClCompile Include="FileName.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="20221416 control easy.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 control hard.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 control.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
