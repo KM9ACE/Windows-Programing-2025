@@ -21,7 +21,7 @@ int main()
         {
             isDragging = 1;
             letterX = mousePos.x / 9;
-            letterY = mousePos.y /19;
+            letterY = mousePos.y / 19;
         }
         else
         {
