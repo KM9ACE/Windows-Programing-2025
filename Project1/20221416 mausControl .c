@@ -16,11 +16,12 @@ int main()
     {
         GetCursorPos(&mousePos); // 마우스 입력 받기
 
+        // F11로 전체화면 들어가시면 커서랑 딱 맞습니다.
         if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
         {
             isDragging = 1;
             letterX = mousePos.x / 9;
-            letterY = mousePos.y / 19;
+            letterY = mousePos.y /19;
         }
         else
         {
