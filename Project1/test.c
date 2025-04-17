@@ -72,7 +72,7 @@ int main() {
 
         // 커서를 마지막 줄로 이동 (선택 사항)
         move_cursor(height, 1);
-    }
+    }111
 
 
     return 0;
