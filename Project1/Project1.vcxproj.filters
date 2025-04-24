@@ -15,7 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="window.c">
+    <ClCompile Include="20221416 console.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 main.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="FileName.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 control easy.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 control hard.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 control.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="20221416 mausControl .c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="test.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
