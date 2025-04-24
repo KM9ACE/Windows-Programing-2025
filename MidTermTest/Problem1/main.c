@@ -1,26 +1,26 @@
 #include <stdio.h>
 
-int A = 0;
-
-void PassOrFail() 
+int PassOrFail() 
 {
-    int myPredictedScore = 0;
+    int myPredictedScore = 40;
 
     if (myPredictedScore >= 50) 
     {
-        A = 1;
+         return 1;
     }
     else 
     {
-        A = 0;
+         return 0;
     }
 }
 
 int main() 
 {
-    PassOrFail();
+    int A = 0;
 
-    if (A == 1) 
+    A = PassOrFail();
+
+    if ( A == 1) 
     {
         printf("재시험 없습니다!\n");
     }
