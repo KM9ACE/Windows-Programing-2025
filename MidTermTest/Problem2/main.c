@@ -18,7 +18,6 @@ int main()
             }
             else 
             {
-
                 printf("\033[44m \033[0m");
             }
         }

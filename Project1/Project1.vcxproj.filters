@@ -39,5 +39,11 @@
     <ClCompile Include="test.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="omg.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
