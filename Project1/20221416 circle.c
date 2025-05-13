@@ -15,7 +15,6 @@ void drawCircle(float radius)
     glVertex2f(0.0f, 0.0f); // 원의 중심 (0, 0)
 
     int i = 0;
-    // 원을 구성하는 점들을 삼각형으로 그리기
     for (i = 0; i <= numSegments; i++) 
     {
         float theta = 2.0f * PI * i / numSegments; // 각도 계산
@@ -43,14 +42,13 @@ int main()
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glPushMatrix(); // 현재 변환 상태 저장
+        glPushMatrix();
 
-        // 회전 행렬 적용
         glRotatef(angle, 0.0f, 0.0f, 1.0f); // z축을 기준으로 회전
 
         drawCircle(0.5f); // 반지름 0.5의 원을 그림
 
-        glPopMatrix(); // 변환 상태 복원
+        glPopMatrix();
 
         angle += 0.5f; // 각도를 증가시켜서 계속 회전
 
