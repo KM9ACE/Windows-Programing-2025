@@ -45,6 +45,9 @@
     <ClCompile Include="20221416 circle.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="20221416 bonobono.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
