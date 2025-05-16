@@ -1,5 +1,5 @@
 #pragma comment(lib, "opengl32.lib")
-
+// F I R S T  I N  L A S T  O U T  !!  정 예 전 투 공 병 육 성 // 
 #include <GLFW/glfw3.h>
 #include <math.h>
 
@@ -28,6 +28,7 @@ void draw_ellipse(Ellipse* e, float r, float g, float b)
     glColor3f(r, g, b);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(e->transform.position.x, e->transform.position.y);
+
     for (int i = 0; i <= e->segments; ++i) 
     {
         float angle = 2.0f * PI * i / e->segments;
@@ -38,12 +39,22 @@ void draw_ellipse(Ellipse* e, float r, float g, float b)
     glEnd();
 }
 
+void draw_line(float x1, float y1, float x2, float y2, float r, float g, float b) 
+{
+    glColor3f(r, g, b);
+    glLineWidth(2.0f);  // 선 두께 2픽셀 설정
+    glBegin(GL_LINES);
+    glVertex2f(x1, y1);
+    glVertex2f(x2, y2);
+    glEnd();
+}
+
 int main() 
 {
     if (!glfwInit())
         return -1;
 
-    GLFWwindow* window = glfwCreateWindow(537, 445, "OpenGL Ellipses", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(537, 445, "OpenGL Ellipses + Line", NULL, NULL);
     if (!window) 
     {
         glfwTerminate();
@@ -52,8 +63,7 @@ int main()
 
     glfwMakeContextCurrent(window);
 
-    // 픽셀 좌표계로 설정
-    glOrtho(0, 537, 0, 445, -1, 1);
+    glOrtho(0, 537, 0, 445, -1, 1); // 픽셀 좌표계
     glClearColor(1, 1, 1, 1);  // 배경 흰색
 
     Ellipse borderEllipse = { { {537 / 2.0f, 445 / 2.0f}, 0, {215, 193.5f} }, 64 };
@@ -69,14 +79,23 @@ int main()
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        draw_ellipse(&borderEllipse, 0, 0, 0);
-        draw_ellipse(&fillEllipse, 0, 0.439f, 0.753f);
-        draw_ellipse(&eyeEllipse1, 0, 0, 0);
-        draw_ellipse(&eyeEllipse2, 0, 0, 0);
-        draw_ellipse(&whiteEllipse1, 1, 1, 1);
-        draw_ellipse(&whiteEllipse2, 1, 1, 1);
-        draw_ellipse(&whiteEllipse3, 1, 1, 1);  // 뒤에 있는 흰 타원
-        draw_ellipse(&noseEllipse, 0, 0, 0);    // 앞에 있는 검은 타원
+        draw_ellipse(&borderEllipse, 0, 0, 0); //테두리용 큰 원
+        draw_ellipse(&fillEllipse, 0, 0.439f, 0.753f); // 얼굴
+		draw_ellipse(&eyeEllipse1, 0, 0, 0); // 왼쪽 눈
+		draw_ellipse(&eyeEllipse2, 0, 0, 0); // 오른쪽 눈
+        draw_ellipse(&whiteEllipse1, 1, 1, 1); // 왼쪽 인중
+        draw_ellipse(&whiteEllipse2, 1, 1, 1); // 오른쪽 인중
+        draw_ellipse(&whiteEllipse3, 1, 1, 1); // 가운데 인중 빈 공간
+        draw_ellipse(&noseEllipse, 0, 0, 0); // 코
+
+        // 왼쪽 수염
+        draw_line(155, 195, 216, 179, 0, 0, 0);
+        draw_line(156, 154, 214, 159, 0, 0, 0);
+        draw_line(157, 125, 221, 144, 0, 0, 0);
+        // 오른쪽 수염
+        draw_line(324, 175, 387, 194, 0, 0, 0);
+        draw_line(324, 157, 391, 157, 0, 0, 0);
+        draw_line(323, 139, 389, 125, 0, 0, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
