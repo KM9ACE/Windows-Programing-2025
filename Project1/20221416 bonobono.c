@@ -5,19 +5,19 @@
 
 #define PI 3.1415926535f
 
-typedef struct 
+typedef struct
 {
     float x, y;
 } Vec2;
 
-typedef struct 
+typedef struct
 {
     Vec2 position;
     float rotation;
     Vec2 scale;  // 반지름(픽셀 단위)
 } Transform;
 
-typedef struct 
+typedef struct
 {
     Transform transform;
     int segments;
