@@ -2,8 +2,11 @@
 
 #include <GLFW/glfw3.h>
 #include <math.h>
+#include <time.h>
 
 #define PI 3.1415926535f
+
+//----아날로그----
 
 typedef struct
 {
@@ -119,7 +122,9 @@ void draw_tick_marks(float cx, float cy, float radius, int count, float length, 
 {
     float angle_step = 360.0f / count;
 
-    for (int i = 0; i < count; ++i)
+    int i = 0;
+
+    for (i = 0; i < count; ++i)
     {
         float angle = i * angle_step * (PI / 180.0f);
 
@@ -131,6 +136,124 @@ void draw_tick_marks(float cx, float cy, float radius, int count, float length, 
 
         draw_line(x1, y1, x2, y2, r, g, b, thickness);
     }
+}
+
+void draw_rect(float x, float y, float width, float height, float r, float g, float b)
+{
+    glColor3f(r, g, b);
+    glBegin(GL_QUADS);
+    glVertex2f(x, y);
+    glVertex2f(x + width, y);
+    glVertex2f(x + width, y + height);
+    glVertex2f(x, y + height);
+    glEnd();
+}
+
+//----디지털----
+
+const unsigned char segmentTable[10] =
+{
+    0b1111110, // 0
+    0b0110000, // 1
+    0b1101101, // 2
+    0b1111001, // 3
+    0b0110011, // 4
+    0b1011011, // 5
+    0b1011111, // 6
+    0b1110000, // 7
+    0b1111111, // 8
+    0b1111011  // 9
+};
+
+// 세그먼트 길이 및 두께 (픽셀 단위)
+const float baseSegLength = 50.0f;
+const float baseSegWidth = 10.0f;
+
+void drawLine(float x1, float y1, float x2, float y2, float lineWidth)
+{
+    glLineWidth(lineWidth);
+    glBegin(GL_LINES);
+    glVertex2f(x1, y1);
+    glVertex2f(x2, y2);
+    glEnd();
+}
+
+void drawSegment(int segmentIndex, float x, float y, float segLength, float segWidth)
+{
+    switch (segmentIndex)
+    {
+    case 0: // A (윗가로)
+        drawLine(x, y + segLength, x + segLength, y + segLength, segWidth);
+        break;
+    case 1: // B (오른쪽 위 세로)
+        drawLine(x + segLength, y + segLength, x + segLength, y, segWidth);
+        break;
+    case 2: // C (오른쪽 아래 세로)
+        drawLine(x + segLength, y, x + segLength, y - segLength, segWidth);
+        break;
+    case 3: // D (아랫가로)
+        drawLine(x, y - segLength, x + segLength, y - segLength, segWidth);
+        break;
+    case 4: // E (왼쪽 아래 세로)
+        drawLine(x, y, x, y - segLength, segWidth);
+        break;
+    case 5: // F (왼쪽 위 세로)
+        drawLine(x, y + segLength, x, y, segWidth);
+        break;
+    case 6: // G (중앙 가로)
+        drawLine(x, y, x + segLength, y, segWidth);
+        break;
+    }
+}
+
+void drawDigit(int digit, float baseX, float baseY, float scale)
+{
+    if (digit < 0 || digit > 9) return;
+
+    unsigned char segments = segmentTable[digit];
+    float segLength = baseSegLength * scale;
+    float segWidth = baseSegWidth * scale;
+
+    int i = 0;
+    
+    for (i = 0; i < 7; i++)
+    {
+        if (segments & (1 << (6 - i)))
+        {
+            drawSegment(i, baseX, baseY, segLength, segWidth);
+        }
+    }
+}
+
+void drawColon(float baseX, float baseY, int visible, float scale)
+{
+    if (!visible) return;
+
+    float radius = 8.0f * scale; // 점 크기
+    glPointSize(radius);
+    glBegin(GL_POINTS);
+    glVertex2f(baseX, baseY + 20.0f * scale);
+    glVertex2f(baseX, baseY - 20.0f * scale);
+    glEnd();
+}
+
+void drawClock(int hour, int minute, int second, float baseX, float baseY, float scale)
+{
+    float spacing = 100.0f * scale;
+
+    drawDigit(hour / 10, baseX, baseY, scale);
+    drawDigit(hour % 10, baseX + spacing, baseY, scale);
+
+    int colonVisible = (second % 2 == 0);
+    drawColon(baseX + spacing * 2 - 22.0f * scale, baseY, colonVisible, scale);
+
+    drawDigit(minute / 10, baseX + spacing * 2, baseY, scale);
+    drawDigit(minute % 10, baseX + spacing * 3, baseY, scale);
+
+    drawColon(baseX + spacing * 4 - 22.0f * scale, baseY, colonVisible, scale);
+
+    drawDigit(second / 10, baseX + spacing * 4, baseY, scale);
+    drawDigit(second % 10, baseX + spacing * 5, baseY, scale);
 }
 
 int main()
@@ -150,6 +273,10 @@ int main()
 
     glOrtho(0, 500, 0, 500, -1, 1); // 픽셀 좌표계
     glClearColor(1, 1, 1, 1);  // 배경 흰색
+
+    glfwSwapInterval(1); // VSync 활성화
+
+    //----아날로그----
 
     Ellipse borderEllipse = { { {250, 250}, 0, {211, 211} }, 64 }; // 픽셀 상 좌표, 회전, 크기, 세그먼트
     Ellipse mainEllipse = { { {250, 250}, 0, {195, 195} }, 64 };
@@ -173,6 +300,8 @@ int main()
         draw_ellipse(&subMainEllipse, 0.9f, 0.9f, 1.0f);
         draw_ellipse(&subCenterEllipse, 0.7f, 0.75f, 0.8f);
 
+        draw_rect(175, 270, 150, 60, 0.0f, 0.0f, 0.0f);
+
         draw_tick_marks(250, 250, 190.0f, 60, 10.0f, 0.7f, 0.75f, 0.8f, 2.0f); // 분 단위 눈금
         draw_tick_marks(250, 250, 190.0f, 12, 20.0f, 0.7f, 0.75f, 0.8f, 4.0f); // 시간 단위 눈금
         draw_tick_marks(250, 160, 60.0f, 12, 13.0f, 0.7f, 0.75f, 0.8f, 3.5f); // 초 단위 눈금 ( 좌표, 좌표, 지름, 눈금 갯수, 눈금 길이, R, G, B, 눈금 두께)
@@ -190,10 +319,25 @@ int main()
         if (angle2 >= 360.0f) angle2 -= 360.0f;
         if (angle3 >= 360.0f) angle3 -= 360.0f;
 
+        //----디지털----
+
+        float scale = 0.25f;
+        float clockPosX = 182.0f;
+        float clockPosY = 300.0f;
+
+        time_t now = time(NULL);
+        struct tm* t = localtime(&now);
+
+        int hour = t->tm_hour;
+        int minute = t->tm_min;
+        int second = t->tm_sec;
+
+        drawClock(hour, minute, second, clockPosX, clockPosY, scale);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
+    
     glfwTerminate();
     return 0;
 }
