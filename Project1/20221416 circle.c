@@ -5,14 +5,14 @@
 
 #define PI 3.14159265358979323846
 
-float angle = 0.0f; // 회전 각도
+float angle = 
 int numSegments = 100; // 원을 구성하는 삼각형의 수
 
 void drawCircle(float radius) 
 {
     glBegin(GL_TRIANGLE_FAN); // 삼각형 팬을 사용하여 원을 그림
     glColor3f(1.0f, 1.0f, 0.0f); // 원의 색상 (노란색)
-    glVertex2f(0.0f, 0.0f); // 원의 중심 (0, 0)
+    glVertex2f(0.0f, 0.0f);
 
     int i = 0;
     for (i = 0; i <= numSegments; i++) 

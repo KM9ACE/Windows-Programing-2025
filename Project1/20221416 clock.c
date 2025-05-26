@@ -74,11 +74,8 @@ void draw_line(float x1, float y1, float x2, float y2, float r, float g, float b
     glEnd();
 }
 
-void draw_rotated_line(float x1, float y1, float x2, float y2, float r, float g, float b, float thickness, float angle)
+void draw_rotated_line(float x1, float y1, float x2, float y2, float r, float g, float b, float thickness, float angle, float cx, float cy)
 {
-    float cx = 250.0f;
-    float cy = 250.0f;
-
     float dx = x2 - x1;
     float dy = y2 - y1;
     float len = sqrtf(dx * dx + dy * dy);
@@ -89,7 +86,7 @@ void draw_rotated_line(float x1, float y1, float x2, float y2, float r, float g,
     float offsetX = (thickness / 2.0f) * nx;
     float offsetY = (thickness / 2.0f) * ny;
 
-    float quad[4][2] = 
+    float quad[4][2] =
     {
         { x1 + offsetX, y1 + offsetY },
         { x2 + offsetX, y2 + offsetY },
@@ -99,9 +96,7 @@ void draw_rotated_line(float x1, float y1, float x2, float y2, float r, float g,
 
     float rad = angle * (PI / 180.0f);
 
-    int i = 0;
-
-    for (i = 0; i < 4; ++i)
+    for (int i = 0; i < 4; ++i)
     {
         float ox = quad[i][0] - cx;
         float oy = quad[i][1] - cy;
@@ -115,12 +110,28 @@ void draw_rotated_line(float x1, float y1, float x2, float y2, float r, float g,
 
     glColor3f(r, g, b);
     glBegin(GL_POLYGON);
-    
-    for (i = 0; i < 4; ++i)
+    for (int i = 0; i < 4; ++i)
         glVertex2f(quad[i][0], quad[i][1]);
     glEnd();
 }
 
+void draw_tick_marks(float cx, float cy, float radius, int count, float length, float r, float g, float b, float thickness)
+{
+    float angle_step = 360.0f / count;
+
+    for (int i = 0; i < count; ++i)
+    {
+        float angle = i * angle_step * (PI / 180.0f);
+
+        float x1 = cx + cosf(angle) * (radius - length);
+        float y1 = cy + sinf(angle) * (radius - length);
+
+        float x2 = cx + cosf(angle) * radius;
+        float y2 = cy + sinf(angle) * radius;
+
+        draw_line(x1, y1, x2, y2, r, g, b, thickness);
+    }
+}
 
 int main()
 {
@@ -162,10 +173,13 @@ int main()
         draw_ellipse(&subMainEllipse, 0.9f, 0.9f, 1.0f);
         draw_ellipse(&subCenterEllipse, 0.7f, 0.75f, 0.8f);
 
-        draw_rotated_line(250, 250, 250, 400, 0.7f, 0.75f, 0.8f, 8.0f, angle1); // 분침 회전
-        draw_rotated_line(250, 250, 350, 250, 0.7f, 0.75f, 0.8f, 6.0f, angle2); // 시침 회전
-        draw_rotated_line(250, 160, 250, 200, 0.7f, 0.75f, 0.8f, 3.0f, angle3); // 초침 회전
-        //초침 중심축 다시 잡아야함!!!! ㅅㅂ
+        draw_tick_marks(250, 250, 190.0f, 60, 10.0f, 0.7f, 0.75f, 0.8f, 2.0f); // 분 단위 눈금
+        draw_tick_marks(250, 250, 190.0f, 12, 20.0f, 0.7f, 0.75f, 0.8f, 4.0f); // 시간 단위 눈금
+        draw_tick_marks(250, 160, 60.0f, 12, 13.0f, 0.7f, 0.75f, 0.8f, 3.5f); // 초 단위 눈금 ( 좌표, 좌표, 지름, 눈금 갯수, 눈금 길이, R, G, B, 눈금 두께)
+
+        draw_rotated_line(250, 250, 250, 400, 0.7f, 0.75f, 0.8f, 8.0f, angle1, 250, 250); // 시침
+        draw_rotated_line(250, 250, 350, 250, 0.7f, 0.75f, 0.8f, 6.0f, angle2, 250, 250); // 분침
+        draw_rotated_line(250, 160, 250, 200, 0.7f, 0.75f, 0.8f, 3.0f, angle3, 250, 160); // 초침 ( 시작점, 끝점, R, G, B, 회전 속도, 중심축)
 
         angle1 -= 0.5f;
         angle2 -= 0.3f;
