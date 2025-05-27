@@ -109,7 +109,7 @@ int main()
     Square eye1 = { {{50, 220}, 0, {5, 20}} };  // 사각형: (100, 100) 위치, 크기 100x100
     Square eye2 = { {{150, 220}, 0, {5, 20}} };
     Circle cir1 = { {{100, height / 2}, 0, {200, 200}}, 64 };  // 원: 화면 중앙에 배치, 크기 100x100, 세그먼트 32개
-    Square cut = { {{100, 100}, 0, {100, 100}} };
+    Square cut = { {{100, 260}, 0, {100, 50}} };
     Circle cir2 = { {{100, 280}, 0, {90, 90}}, 64 };
     
     // 메인 렌더링 루프
@@ -123,9 +123,8 @@ int main()
         draw_circle(&cir1, 1.0f, 1.0f, 0.0f);  // 원 그리기
         draw_square(&eye1, 0.0f, 0.0f, 0.0f);
         draw_square(&eye2, 0.0f, 0.0f, 0.0f);
-        draw_circle(&cut, 1.0f, 1.0f, 0.0f);
         draw_circle(&cir2, 0.0f, 0.0f, 0.0f);
-      
+        draw_square(&cut, 1.0f, 1.0f, 0.0f);
 
         glfwSwapBuffers(window);  // 화면 갱신 (프레임 버퍼를 교환)
         glfwPollEvents();  // 윈도우 이벤트 처리 (예: 키보드, 마우스 이벤트)
