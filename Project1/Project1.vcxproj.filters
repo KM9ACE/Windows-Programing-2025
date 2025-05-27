@@ -54,6 +54,12 @@
     <ClCompile Include="20221416 junjarClock.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="memo.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="moui test.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
