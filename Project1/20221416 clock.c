@@ -30,7 +30,6 @@ void draw_ellipse(Ellipse* e, float r, float g, float b)
 {
     glColor3f(r, g, b);
     glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(e->transform.position.x, e->transform.position.y);
 
     int i = 0;
 

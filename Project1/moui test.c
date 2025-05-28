@@ -84,6 +84,10 @@ void draw_circle(Circle* c, float r, float g, float b)
     glPopMatrix();  // 저장된 변환 행렬 복원
 }
 
+// 이동 도형
+
+
+
 // main 함수
 int main()
 {
