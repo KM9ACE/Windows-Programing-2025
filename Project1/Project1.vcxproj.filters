@@ -60,6 +60,9 @@
     <ClCompile Include="moui test.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="memo2.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
