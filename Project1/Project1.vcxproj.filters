@@ -63,6 +63,18 @@
     <ClCompile Include="memo2.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="testmemo1.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="testmemo2.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="testmemo3.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="testmemo4.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
